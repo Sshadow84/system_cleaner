@@ -1,13 +1,14 @@
 #!/bin/bash
 
-# ===== Отображение логотипа, если он есть =====
+# ===== Отображение логотипа, если файл logo_new.sh найден =====
 if [[ -f "./logo_new.sh" ]]; then
   source ./logo_new.sh
   channel_logo
+else
+  echo "🔕 Логотип не найден (logo_new.sh). Продолжаем без логотипа."
 fi
 
-
-# ===== Функция подтверждения =====
+# ===== Подтверждение =====
 confirm() {
     local prompt="$1"
     read -p "$prompt [y/n, Enter = yes]: " choice
@@ -18,7 +19,7 @@ confirm() {
     esac
 }
 
-# ===== Проверка ошибок =====
+# ===== Ошибки =====
 check_success() {
     if [ $? -ne 0 ]; then
         echo "❌ Ошибка на этапе: $1"
@@ -26,7 +27,7 @@ check_success() {
     fi
 }
 
-# ===== Настройка logrotate =====
+# ===== logrotate =====
 setup_logrotate() {
     echo "Установка и настройка logrotate..."
     sudo apt update && sudo apt install -y logrotate
@@ -48,10 +49,10 @@ setup_logrotate() {
 }
 EOL
     sudo logrotate -f /etc/logrotate.d/my_syslog_kernlog -v
-    echo "✅ logrotate настроен для syslog и kern.log"
+    echo "✅ logrotate настроен"
 }
 
-# ===== Настройка journald =====
+# ===== journald =====
 setup_journald() {
     echo "Настройка journald..."
     sudo tee /etc/systemd/journald.conf > /dev/null <<EOL
@@ -64,7 +65,7 @@ EOL
     echo "✅ journald настроен"
 }
 
-# ===== Установка rsyslog =====
+# ===== rsyslog =====
 install_rsyslog() {
     echo "Установка rsyslog..."
     sudo apt update && sudo apt install -y rsyslog
@@ -72,7 +73,7 @@ install_rsyslog() {
     echo "✅ rsyslog установлен"
 }
 
-# ===== Очистка логов вручную =====
+# ===== Очистка логов =====
 clear_logs() {
     if confirm "Удалить все системные и бинарные логи?"; then
         sudo journalctl --vacuum-time=1s
@@ -83,15 +84,15 @@ clear_logs() {
     fi
 }
 
-# ===== Очистка Docker =====
+# ===== Docker =====
 clear_docker() {
-    if confirm "Удалить все неиспользуемые docker-ресурсы (контейнеры, образы, сети)?"; then
+    if confirm "Удалить все неиспользуемые docker-ресурсы?"; then
         sudo docker system prune -a -f
         echo "✅ Docker очищен"
     fi
 }
 
-# ===== Удаление архивов =====
+# ===== Архивы =====
 delete_archives() {
     if confirm "Удалить все архивы в текущей директории (*.tar, *.gz, *.zip)?"; then
         find . -type f \( -name "*.tar" -o -name "*.gz" -o -name "*.zip" \) -exec rm -v {} \;
@@ -99,7 +100,7 @@ delete_archives() {
     fi
 }
 
-# ===== Очистка кэша =====
+# ===== Кэш =====
 clear_cache() {
     if confirm "Очистить кэш (apt, thumbnails, drop_caches)?"; then
         sudo apt clean
@@ -115,14 +116,14 @@ main_menu() {
     while true; do
         echo ""
         echo "========= 🧹 UNIVERSAL SYSTEM CLEANER ========="
-        echo "1) Настроить logrotate (ротация логов)"
-        echo "2) Настроить journald (лимит бинарных логов)"
-        echo "3) Установить rsyslog (если не установлен)"
-        echo "4) Очистить логи вручную (агрессивно)"
-        echo "5) Очистить Docker (контейнеры/образы)"
-        echo "6) Удалить архивы в текущей папке"
+        echo "1) Настроить logrotate"
+        echo "2) Настроить journald"
+        echo "3) Установить rsyslog"
+        echo "4) Очистить логи вручную"
+        echo "5) Очистить Docker"
+        echo "6) Удалить архивы"
         echo "7) Очистить системный кэш"
-        echo "8) Выполнить всё сразу (Safe Mode: 1–3 + 5–7)"
+        echo "8) Выполнить всё сразу (Safe Mode)"
         echo "0) Выйти"
         echo "==============================================="
         read -rp "Выберите действие: " choice

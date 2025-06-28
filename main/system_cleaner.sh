@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ===== Загрузка логотипа из GitHub =====
+# ===== Безопасная загрузка логотипа (только функцию) =====
 LOGO_URL="https://raw.githubusercontent.com/Sshadow84/system_cleaner/main/logo_new.sh"
 TMP_LOGO="/tmp/logo_new.sh"
 

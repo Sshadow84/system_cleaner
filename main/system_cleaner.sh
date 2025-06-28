@@ -3,7 +3,9 @@
 # ===== Отображение логотипа, если он есть =====
 if [[ -f "./logo_new.sh" ]]; then
   source ./logo_new.sh
+  channel_logo
 fi
+
 
 # ===== Функция подтверждения =====
 confirm() {

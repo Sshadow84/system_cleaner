@@ -3,9 +3,7 @@
 ## 🚀 Быстрый запуск
 
 ```bash
-curl -O https://raw.githubusercontent.com/Sshadow84/system_cleaner/main/main/system_cleaner.sh
-chmod +x system_cleaner.sh
-./system_cleaner.sh
+curl -O https://raw.githubusercontent.com/Sshadow84/system_cleaner/main/main/system_cleaner.sh && chmod +x system_cleaner.sh && ./system_cleaner.sh
 ```
 
 Многофункциональный скрипт для администрирования Linux-сервера. Позволяет:

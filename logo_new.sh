@@ -11,4 +11,3 @@ channel_logo() {
   echo -e '\e[0m'
   echo -e "\nПриватное сообщество о нодах Profit Nodes - https://t.me/ProfitNodes_bot"
 }
-channel_logo

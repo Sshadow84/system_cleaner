@@ -1,9 +1,11 @@
 # 🧹 System Cleaner & Log Manager for Linux
 
-## 🚀 Быстрый запуск (одной строкой)
+## 🚀 Быстрый запуск
 
 ```bash
-curl -sL https://raw.githubusercontent.com/Sshadow84/system_cleaner/main/main/system_cleaner.sh | bash
+curl -O https://raw.githubusercontent.com/Sshadow84/system_cleaner/main/main/system_cleaner.sh
+chmod +x system_cleaner.sh
+./system_cleaner.sh
 ```
 
 Многофункциональный скрипт для администрирования Linux-сервера. Позволяет:

@@ -1,11 +1,16 @@
 #!/bin/bash
 
-# ===== Отображение логотипа, если файл logo_new.sh найден =====
-if [[ -f "./logo_new.sh" ]]; then
-  source ./logo_new.sh
+# ===== Автоматическая загрузка логотипа из GitHub =====
+LOGO_URL="https://raw.githubusercontent.com/Sshadow84/system_cleaner/main/logo_new.sh"
+TMP_LOGO="/tmp/logo_new.sh"
+
+curl -sL "$LOGO_URL" -o "$TMP_LOGO"
+if [[ -f "$TMP_LOGO" ]]; then
+  source "$TMP_LOGO"
   channel_logo
+  rm -f "$TMP_LOGO"
 else
-  echo "🔕 Логотип не найден (logo_new.sh). Продолжаем без логотипа."
+  echo "🔕 Логотип не загружен. Продолжаем без логотипа."
 fi
 
 # ===== Подтверждение =====
